@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">NewsApp</string>
+    <string name="action_settings">Settings</string>
+    <string name="image_from_article_conten">Image from article conten</string>
+    <string name="textview">TextView</string>
+    <string name="content_description">Content Description</string>
+</resources>
