@@ -20,25 +20,23 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.Executors
 
 
-open class NewsActivity : AppCompatActivity() {
+class NewsActivity : AppCompatActivity() {
 
     //private var articlePosition = POSITION_NOT_SET
-    var articles: ArrayList<Article>
+    lateinit var articles: ArrayList<Article>
 
-    init {
-        articles = ArrayList()
-        initializeArticlesFromApi()
-    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.article_list)
         setSupportActionBar(toolbar)
 
+        articles = ArrayList()
+        initializeArticlesFromApi()
+
         listArticles.layoutManager = LinearLayoutManager(this)
 
-
-        Log.d("Nedern", "${articles.size}")
         listArticles.adapter = ArticleRecyclerAdapter(this, articles)
     }
 

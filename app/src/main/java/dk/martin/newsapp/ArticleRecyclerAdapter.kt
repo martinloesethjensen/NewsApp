@@ -9,9 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.module.AppGlideModule
-import dk.martin.newsapp.api.MyAppGlideModule
+import dk.martin.newsapp.api.GlideApp
 import dk.martin.newsapp.model.Article
 
 class ArticleRecyclerAdapter(var context: Context, private val articles: List<Article>) :
@@ -30,7 +28,9 @@ class ArticleRecyclerAdapter(var context: Context, private val articles: List<Ar
         val article = articles[position]
         Log.d("OnBindViewHolder", "${article.title}")
 
-        //var image = GlideA
+        GlideApp.with(holder.itemView)
+            .load(article.urlToImage)
+            .into(holder.image)
         //holder.image?.setImageResource() // TODO: load image using Glider
         holder.textTitle?.text = article.title
         holder.textDescription?.text = article.description
