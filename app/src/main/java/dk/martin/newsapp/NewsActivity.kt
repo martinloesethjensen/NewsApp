@@ -23,8 +23,7 @@ import java.util.concurrent.Executors
 class NewsActivity : AppCompatActivity() {
 
     //private var articlePosition = POSITION_NOT_SET
-    lateinit var articles: ArrayList<Article>
-
+    var articles = ArrayList<Article>()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,7 +31,6 @@ class NewsActivity : AppCompatActivity() {
         setContentView(R.layout.article_list)
         setSupportActionBar(toolbar)
 
-        articles = ArrayList()
         initializeArticlesFromApi()
 
         listArticles.layoutManager = LinearLayoutManager(this)

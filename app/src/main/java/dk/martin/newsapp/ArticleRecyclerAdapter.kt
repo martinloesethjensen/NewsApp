@@ -28,9 +28,12 @@ class ArticleRecyclerAdapter(var context: Context, private val articles: List<Ar
         val article = articles[position]
         Log.d("OnBindViewHolder", "${article.title}")
 
-        GlideApp.with(holder.itemView)
+        Thread(Runnable {
+            GlideApp.with(holder.itemView)
             .load(article.urlToImage)
             .into(holder.image)
+        })
+
         //holder.image?.setImageResource() // TODO: load image using Glider
         holder.textTitle?.text = article.title
         holder.textDescription?.text = article.description
