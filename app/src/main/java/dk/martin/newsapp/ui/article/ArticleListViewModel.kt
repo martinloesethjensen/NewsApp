@@ -3,14 +3,15 @@ package dk.martin.newsapp.ui.article
 import android.arch.lifecycle.MutableLiveData
 import android.view.View
 import dk.martin.newsapp.R
-import dk.martin.newsapp.base.ArticleViewModel
+import dk.martin.newsapp.base.BaseViewModel
+import dk.martin.newsapp.model.ArticleList
 import dk.martin.newsapp.network.NewsApiService
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-class ArticleListViewModel : ArticleViewModel() {
+class ArticleListViewModel : BaseViewModel() {
 
     @Inject
     lateinit var articleApi: NewsApiService
@@ -19,6 +20,7 @@ class ArticleListViewModel : ArticleViewModel() {
     val loadingVisibility: MutableLiveData<Int> = MutableLiveData()
     val errorMessage: MutableLiveData<Int> = MutableLiveData()
     val errorClickListener = View.OnClickListener { loadArticles() }
+    val articleListAdapter: ArticleListAdapter = ArticleListAdapter()
 
     init {
         loadArticles()
@@ -31,7 +33,7 @@ class ArticleListViewModel : ArticleViewModel() {
             .doOnSubscribe { onRetrieveArticleListStart() }
             .doOnTerminate { onRetrieveArticleListFinish() }
             .subscribe(
-                { onRetrieveArticleListSuccess() },
+                { result -> onRetrieveArticleListSuccess(result) },
                 { onRetrieveArticleListError() }
             )
     }
@@ -50,12 +52,11 @@ class ArticleListViewModel : ArticleViewModel() {
         loadingVisibility.value = View.GONE
     }
 
-    private fun onRetrieveArticleListSuccess() {
-
+    private fun onRetrieveArticleListSuccess(articleList: ArticleList) {
+        articleListAdapter.updateArticleList(articleList)
     }
 
     private fun onRetrieveArticleListError() {
         errorMessage.value = R.string.post_error
     }
-
 }

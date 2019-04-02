@@ -6,7 +6,7 @@ import dk.martin.newsapp.component.injection.ViewModelInjector
 import dk.martin.newsapp.module.NetworkModule
 import dk.martin.newsapp.ui.article.ArticleListViewModel
 
-abstract class ArticleViewModel : ViewModel() {
+abstract class BaseViewModel : ViewModel() {
     private val injector: ViewModelInjector = DaggerViewModelInjector
         .builder()
         .networkModule(NetworkModule)
