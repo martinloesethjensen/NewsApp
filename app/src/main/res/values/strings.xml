@@ -5,4 +5,6 @@
     <string name="textview">TextView</string>
     <string name="content_description">Content Description</string>
     <string name="image_for_article">Image_for_article</string>
+    <string name="retry">Retry</string>
+    <string name="post_error">An error occurred while loading the posts</string>
 </resources>

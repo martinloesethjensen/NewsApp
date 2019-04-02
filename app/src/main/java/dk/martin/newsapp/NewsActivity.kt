@@ -6,14 +6,11 @@ import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import dk.martin.newsapp.api.NewsApiService
 import dk.martin.newsapp.model.Article
-import dk.martin.newsapp.model.ArticleList
+import dk.martin.newsapp.network.NewsApiService
+import dk.martin.newsapp.utils.BASE_URL
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.article_list.*
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
@@ -69,7 +66,7 @@ class NewsActivity : AppCompatActivity() {
 
         val articlesFromApi = apiService.getArticles()
 
-        articlesFromApi.enqueue(object : Callback<ArticleList> {
+        /*articlesFromApi.enqueue(object : Callback<ArticleList> {
             override fun onFailure(call: Call<ArticleList>, throwable: Throwable) {
                 if (call.isCanceled) Log.d("initializeArticlesFromApi", throwable.message)
             }
@@ -89,7 +86,7 @@ class NewsActivity : AppCompatActivity() {
                     call.cancel()
                 }
             }
-        })
+        })*/
     }
 
     fun onPostExecute() {

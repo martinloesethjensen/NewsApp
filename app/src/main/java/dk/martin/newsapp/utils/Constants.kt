@@ -1,4 +1,4 @@
-package dk.martin.newsapp
+package dk.martin.newsapp.utils
 
 const val ARTICLE_POSITION = "NOTE_POSITION"
 const val POSITION_NOT_SET = -1

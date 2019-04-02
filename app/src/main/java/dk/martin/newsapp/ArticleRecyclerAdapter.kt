@@ -9,8 +9,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import dk.martin.newsapp.api.GlideApp
 import dk.martin.newsapp.model.Article
+import dk.martin.newsapp.module.GlideApp
+import dk.martin.newsapp.utils.ARTICLE_POSITION
 
 class ArticleRecyclerAdapter(var context: Context, private val articles: List<Article>) :
     RecyclerView.Adapter<ArticleRecyclerAdapter.ViewHolder>() {
@@ -31,7 +32,7 @@ class ArticleRecyclerAdapter(var context: Context, private val articles: List<Ar
         Thread(Runnable {
             GlideApp.with(holder.itemView)
             .load(article.urlToImage)
-            .into(holder.image)
+                .into(holder.image!!)
         })
 
         //holder.image?.setImageResource() // TODO: load image using Glider
