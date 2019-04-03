@@ -12,7 +12,7 @@ import android.widget.TextView
 import dk.martin.newsapp.R
 import dk.martin.newsapp.model.Article
 import dk.martin.newsapp.module.GlideApp
-import dk.martin.newsapp.utils.ARTICLE_POSITION
+import dk.martin.newsapp.utils.ARTICLE_URL
 
 class ArticleRecyclerAdapter(var context: Context, private val articles: List<Article>) :
     RecyclerView.Adapter<ArticleRecyclerAdapter.ViewHolder>() {
@@ -48,9 +48,15 @@ class ArticleRecyclerAdapter(var context: Context, private val articles: List<Ar
             itemView?.setOnClickListener {
                 val intent = Intent(
                     context,
-                    WebViewActivity(articles[articlePosition].url)::class.java
-                ) // TODO: New activity handling in-app web-browser
-                intent.putExtra(ARTICLE_POSITION, articlePosition)
+                    WebViewActivity::class.java
+                )
+
+                Log.d(
+                    "ArticleRecyclerAdapter", "Article title: ${articles[articlePosition].title} " +
+                            "\nArticle url: ${articles[articlePosition].url}"
+                )
+
+                intent.putExtra(ARTICLE_URL, articles[articlePosition].url)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                 context.startActivity(intent)
             }

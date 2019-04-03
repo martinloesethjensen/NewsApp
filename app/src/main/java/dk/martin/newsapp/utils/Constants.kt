@@ -1,5 +1,4 @@
 package dk.martin.newsapp.utils
 
-const val ARTICLE_POSITION = "NOTE_POSITION"
-const val POSITION_NOT_SET = -1
 const val BASE_URL = "https://newsapi.org/v2/"
+const val ARTICLE_URL = "ARTICLE_URL"
