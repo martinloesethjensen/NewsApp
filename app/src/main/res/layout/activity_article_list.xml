@@ -20,7 +20,7 @@
                 app:layout_constraintEnd_toEndOf="parent"/>
 
         <android.support.v7.widget.RecyclerView
-                android:id="@+id/post_list"
+                android:id="@+id/article_list"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 app:adapter="@{viewModel.getArticleListAdapter()}"
