@@ -9,10 +9,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import dk.martin.newsapp.ARTICLE_POSITION
 import dk.martin.newsapp.R
-import dk.martin.newsapp.api.GlideApp
 import dk.martin.newsapp.model.Article
+import dk.martin.newsapp.module.GlideApp
+import dk.martin.newsapp.utils.ARTICLE_POSITION
 
 class ArticleRecyclerAdapter(var context: Context, private val articles: List<Article>) :
     RecyclerView.Adapter<ArticleRecyclerAdapter.ViewHolder>() {
@@ -46,8 +46,12 @@ class ArticleRecyclerAdapter(var context: Context, private val articles: List<Ar
 
         init {
             itemView?.setOnClickListener {
-                val intent = Intent(context, NewsActivity::class.java) // TODO: New activity handling in-app web-browser
+                val intent = Intent(
+                    context,
+                    WebViewActivity(articles[articlePosition].url)::class.java
+                ) // TODO: New activity handling in-app web-browser
                 intent.putExtra(ARTICLE_POSITION, articlePosition)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                 context.startActivity(intent)
             }
         }

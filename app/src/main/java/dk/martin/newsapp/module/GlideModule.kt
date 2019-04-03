@@ -1,8 +1,8 @@
-package dk.martin.newsapp.api
+package dk.martin.newsapp.module
 
 import com.bumptech.glide.annotation.GlideModule
 import com.bumptech.glide.module.AppGlideModule
 
 
 @GlideModule
-class MyAppGlideModule : AppGlideModule()
+class GlideModule : AppGlideModule()

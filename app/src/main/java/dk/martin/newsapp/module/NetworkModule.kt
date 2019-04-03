@@ -1,7 +1,7 @@
 package dk.martin.newsapp.module
 
-import dk.martin.newsapp.BASE_URL
 import dk.martin.newsapp.network.NewsApiService
+import dk.martin.newsapp.utils.BASE_URL
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory

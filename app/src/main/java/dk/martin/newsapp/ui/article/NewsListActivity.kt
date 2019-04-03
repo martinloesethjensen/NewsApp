@@ -17,7 +17,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 
-class NewsActivity : AppCompatActivity() {
+class NewsListActivity : AppCompatActivity() {
 
     //private var articlePosition = POSITION_NOT_SET
     var articles = ArrayList<Article>()
@@ -72,7 +72,7 @@ class NewsActivity : AppCompatActivity() {
                     val articleList: ArticleList? = response.body()
                     articles = articleList?.articles as ArrayList<Article>
 
-                    this@NewsActivity.runOnUiThread {
+                    this@NewsListActivity.runOnUiThread {
                         onPostExecute()
                     }
 
