@@ -1,4 +1,4 @@
-package dk.martin.newsapp
+package dk.martin.newsapp.ui.article
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -6,18 +6,15 @@ import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import dk.martin.newsapp.api.NewsApiService
+import dk.martin.newsapp.R
 import dk.martin.newsapp.model.Article
 import dk.martin.newsapp.model.ArticleList
+import dk.martin.newsapp.module.NetworkModule
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.article_list.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
-import retrofit2.converter.gson.GsonConverterFactory
-import java.util.concurrent.Executors
 
 
 class NewsActivity : AppCompatActivity() {
@@ -58,14 +55,9 @@ class NewsActivity : AppCompatActivity() {
     private fun initializeArticlesFromApi() {
         Log.d("initializeArticlesFromApi", "Running initializeArticlesFromApi()")
 
-        val retrofit = Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .callbackExecutor(Executors.newSingleThreadExecutor())
-            .addConverterFactory(GsonConverterFactory.create())
-            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-            .build()
+        val retrofit = NetworkModule.provideRetrofitInterface()
 
-        val apiService = retrofit.create(NewsApiService::class.java)
+        val apiService = NetworkModule.provideNewsApi(retrofit)
 
         val articlesFromApi = apiService.getArticles()
 
