@@ -1,4 +1,4 @@
-package dk.martin.newsapp.network
+package dk.martin.newsapp.service.network
 
 import dk.martin.newsapp.model.ArticleList
 import retrofit2.Call

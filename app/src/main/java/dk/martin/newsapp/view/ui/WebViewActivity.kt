@@ -1,4 +1,4 @@
-package dk.martin.newsapp.ui.article
+package dk.martin.newsapp.view.ui
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -6,7 +6,7 @@ import android.util.Log
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import dk.martin.newsapp.R
-import dk.martin.newsapp.utils.ARTICLE_URL
+import dk.martin.newsapp.service.utils.ARTICLE_URL
 
 class WebViewActivity : AppCompatActivity() {
 

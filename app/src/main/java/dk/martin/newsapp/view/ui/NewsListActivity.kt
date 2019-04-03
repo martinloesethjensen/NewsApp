@@ -1,4 +1,4 @@
-package dk.martin.newsapp.ui.article
+package dk.martin.newsapp.view.ui
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -9,7 +9,8 @@ import android.view.MenuItem
 import dk.martin.newsapp.R
 import dk.martin.newsapp.model.Article
 import dk.martin.newsapp.model.ArticleList
-import dk.martin.newsapp.module.NetworkModule
+import dk.martin.newsapp.service.module.NetworkModule
+import dk.martin.newsapp.view.adapter.ArticleRecyclerAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.article_list.*
 import retrofit2.Call

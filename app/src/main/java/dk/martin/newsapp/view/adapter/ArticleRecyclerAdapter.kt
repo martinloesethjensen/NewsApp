@@ -1,4 +1,4 @@
-package dk.martin.newsapp.ui.article
+package dk.martin.newsapp.view.adapter
 
 import android.content.Context
 import android.content.Intent
@@ -11,8 +11,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import dk.martin.newsapp.R
 import dk.martin.newsapp.model.Article
-import dk.martin.newsapp.module.GlideApp
-import dk.martin.newsapp.utils.ARTICLE_URL
+import dk.martin.newsapp.service.module.GlideApp
+import dk.martin.newsapp.service.utils.ARTICLE_URL
+import dk.martin.newsapp.view.ui.WebViewActivity
 
 class ArticleRecyclerAdapter(var context: Context, private val articles: List<Article>) :
     RecyclerView.Adapter<ArticleRecyclerAdapter.ViewHolder>() {
@@ -26,7 +27,7 @@ class ArticleRecyclerAdapter(var context: Context, private val articles: List<Ar
 
     override fun getItemCount() = articles.size
 
-    override fun onBindViewHolder(holder: ArticleRecyclerAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val article = articles[position]
         Log.d("OnBindViewHolder", "${article.title}")
 

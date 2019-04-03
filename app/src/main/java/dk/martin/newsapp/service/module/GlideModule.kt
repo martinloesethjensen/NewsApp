@@ -1,4 +1,4 @@
-package dk.martin.newsapp.module
+package dk.martin.newsapp.service.module
 
 import com.bumptech.glide.annotation.GlideModule
 import com.bumptech.glide.module.AppGlideModule
