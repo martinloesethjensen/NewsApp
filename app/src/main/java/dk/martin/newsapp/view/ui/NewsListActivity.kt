@@ -8,21 +8,19 @@ import android.view.Menu
 import android.view.MenuItem
 import dk.martin.newsapp.R
 import dk.martin.newsapp.model.Article
-import dk.martin.newsapp.model.ArticleList
 import dk.martin.newsapp.service.module.NetworkModule
 import dk.martin.newsapp.view.adapter.ArticleRecyclerAdapter
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.article_list.*
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 
 class NewsListActivity : AppCompatActivity() {
 
-    //private var articlePosition = POSITION_NOT_SET
     var articles = ArrayList<Article>()
-
+    private lateinit var subscribe: Disposable
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,11 +29,10 @@ class NewsListActivity : AppCompatActivity() {
 
         initializeArticlesFromApi()
 
-        listArticles.layoutManager = LinearLayoutManager(this)
+        listArticles.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
         listArticles.adapter = ArticleRecyclerAdapter(this, articles)
     }
-
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -60,33 +57,25 @@ class NewsListActivity : AppCompatActivity() {
 
         val apiService = NetworkModule.provideNewsApi(retrofit)
 
-        val articlesFromApi = apiService.getArticles()
-
-        articlesFromApi.enqueue(object : Callback<ArticleList> {
-            override fun onFailure(call: Call<ArticleList>, throwable: Throwable) {
-                if (call.isCanceled) Log.d("initializeArticlesFromApi", throwable.message)
-            }
-
-            override fun onResponse(call: Call<ArticleList>, response: Response<ArticleList>) {
-                if (response.isSuccessful) {
-                    Log.d("initializeArticlesFromApi", response.body().toString())
-                    val articleList: ArticleList? = response.body()
-                    articles = articleList?.articles as ArrayList<Article>
-
-                    this@NewsListActivity.runOnUiThread {
-                        onPostExecute()
-                    }
-
+        subscribe = apiService.getArticles()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                { result ->
+                    Log.d("initializeArticlesFromApi", result.toString())
+                    articles = result?.articles as ArrayList<Article>
+                    onPostExecute() // important for refreshing the list, so it's not blank
                     Log.d("initializeArticlesFromApi", "Articles size: ${articles.size}")
-                } else if (articles.size != 0 && call.isExecuted) {
-                    call.cancel()
+                },
+                { error ->
+                    Log.d("initializeArticlesFromApi", "Error with fetching articles from api: ${error.message}")
                 }
-            }
-        })
+            )
     }
 
-    fun onPostExecute() {
+    private fun onPostExecute() {
         val adapter = ArticleRecyclerAdapter(applicationContext, articles)
         listArticles.adapter = adapter
+        subscribe.dispose()
     }
 }
