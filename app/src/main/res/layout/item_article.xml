@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
 
     <data>
         <variable
@@ -7,31 +8,71 @@
                 type="dk.martin.newsapp.ui.article.ArticleViewModel"/>
     </data>
 
-    <android.support.constraint.ConstraintLayout
+    <android.support.v7.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp">
+            android:layout_height="wrap_content" app:cardElevation="4dp" app:contentPadding="16dp"
+            app:cardCornerRadius="4dp" app:cardBackgroundColor="@android:color/background_light"
+            app:cardUseCompatPadding="true" android:id="@+id/itemView">
 
-        <TextView
-                android:id="@+id/article_title"
-                android:layout_width="0dp"
+        <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textStyle="bold"
-                app:mutableText="@{viewModel.getArticleTitle()}"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp">
 
-        <TextView
-                android:id="@+id/article_description"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                app:mutableText="@{viewModel.getArticleDescription()}"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/article_title"/>
-    </android.support.constraint.ConstraintLayout>
+            <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="100dp" tools:srcCompat="@tools:sample/backgrounds/scenic"
+                    android:id="@+id/card_view_image" android:scaleType="centerCrop"
+                    android:contentDescription="@string/image_for_article"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginTop="8dp" app:layout_constraintTop_toTopOf="parent"
+            />
 
+            <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="32dp" android:id="@+id/article_title"
+                    android:layout_margin="10dp" android:gravity="center_horizontal" android:textSize="24sp"
+                    app:layout_constraintTop_toBottomOf="@+id/card_view_image" app:layout_constraintEnd_toEndOf="parent"
+                    app:mutableText="@{viewModel.getArticleTitle()}"
+                    android:layout_marginEnd="8dp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp" android:text="@string/textview"/>
+
+            <TextView
+                    android:text="@string/content_description"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/article_description"
+                    app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginStart="8dp"
+                    app:mutableText="@{viewModel.getArticleDescription()}"
+                    app:layout_constraintHorizontal_bias="0.0" android:layout_marginBottom="8dp"
+                    app:layout_constraintBottom_toBottomOf="parent" android:layout_marginTop="8dp"
+                    app:layout_constraintTop_toBottomOf="@+id/article_title"/>
+
+            <!--<TextView
+                    android:id="@+id/article_title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    app:mutableText="@{viewModel.getArticleTitle()}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>-->
+
+            <!--<TextView
+                    android:id="@+id/article_description"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    app:mutableText="@{viewModel.getArticleDescription()}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/article_title"/>-->
+        </android.support.constraint.ConstraintLayout>
+    </android.support.v7.widget.CardView>
 </layout>

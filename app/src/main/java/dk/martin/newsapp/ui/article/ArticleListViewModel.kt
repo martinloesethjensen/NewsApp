@@ -57,6 +57,6 @@ class ArticleListViewModel : BaseViewModel() {
     }
 
     private fun onRetrieveArticleListError() {
-        errorMessage.value = R.string.post_error
+        errorMessage.value = R.string.article_error
     }
 }
