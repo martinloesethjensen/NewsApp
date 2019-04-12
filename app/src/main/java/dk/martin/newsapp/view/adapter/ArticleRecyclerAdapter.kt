@@ -1,6 +1,5 @@
 package dk.martin.newsapp.view.adapter
 
-import android.content.Context
 import android.content.Intent
 import android.support.v7.widget.RecyclerView
 import android.util.Log
@@ -15,17 +14,20 @@ import dk.martin.newsapp.service.module.GlideApp
 import dk.martin.newsapp.service.utils.ARTICLE_URL
 import dk.martin.newsapp.view.ui.WebViewActivity
 
-class ArticleRecyclerAdapter(var context: Context, private val articles: List<Article>) :
+class ArticleRecyclerAdapter(private var articles: List<Article> = listOf()) :
     RecyclerView.Adapter<ArticleRecyclerAdapter.ViewHolder>() {
 
-    private val layoutInflater = LayoutInflater.from(context)
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val itemView = layoutInflater.inflate(R.layout.article_not_list, parent, false)
+        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.article_not_list, parent, false)
         return ViewHolder(itemView)
     }
 
     override fun getItemCount() = articles.size
+
+    fun updateArticleList(articles: List<Article>) {
+        this.articles = articles
+        notifyDataSetChanged()
+    }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val article = articles[position]
@@ -48,7 +50,7 @@ class ArticleRecyclerAdapter(var context: Context, private val articles: List<Ar
         init {
             itemView?.setOnClickListener {
                 val intent = Intent(
-                    context,
+                    itemView.context,
                     WebViewActivity::class.java
                 )
 
@@ -59,7 +61,7 @@ class ArticleRecyclerAdapter(var context: Context, private val articles: List<Ar
 
                 intent.putExtra(ARTICLE_URL, articles[articlePosition].url)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                context.startActivity(intent)
+                itemView.context.startActivity(intent)
             }
         }
     }
