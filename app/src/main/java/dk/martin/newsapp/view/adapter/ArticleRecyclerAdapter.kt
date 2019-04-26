@@ -1,13 +1,13 @@
 package dk.martin.newsapp.view.adapter
 
 import android.content.Intent
-import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import dk.martin.newsapp.R
 import dk.martin.newsapp.model.Article
 import dk.martin.newsapp.service.module.GlideApp

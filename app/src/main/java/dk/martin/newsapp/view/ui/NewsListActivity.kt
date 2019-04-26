@@ -1,11 +1,12 @@
 package dk.martin.newsapp.view.ui
 
-import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
 import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import dk.martin.newsapp.R
 import dk.martin.newsapp.viewmodel.NewsListViewModel
 import kotlinx.android.synthetic.main.activity_main.*
@@ -26,7 +27,11 @@ class NewsListActivity : AppCompatActivity() {
         val viewModel = ViewModelProviders.of(this).get(NewsListViewModel::class.java)
         viewModel.getArticles()
 
-        listArticles.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        listArticles.layoutManager = LinearLayoutManager(
+            this,
+            RecyclerView.VERTICAL,
+            false
+        )
 
         listArticles.adapter = viewModel.getAdapter()
     }

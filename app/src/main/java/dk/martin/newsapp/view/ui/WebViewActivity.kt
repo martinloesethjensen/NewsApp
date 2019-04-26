@@ -1,10 +1,10 @@
 package dk.martin.newsapp.view.ui
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import androidx.appcompat.app.AppCompatActivity
 import dk.martin.newsapp.R
 import dk.martin.newsapp.service.utils.ARTICLE_URL
 

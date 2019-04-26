@@ -1,8 +1,8 @@
 package dk.martin.newsapp.viewmodel
 
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModel
 import android.util.Log
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import dk.martin.newsapp.model.Article
 import dk.martin.newsapp.service.module.NetworkModule
 import dk.martin.newsapp.view.adapter.ArticleRecyclerAdapter
