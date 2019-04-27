@@ -20,3 +20,9 @@ For bonus points, the project can make use of the following (this isn’t requir
 - Kotlin instead of Java
 - Conductor
 - RxJava
+___
+
+Extra things added: 
+- Groupie
+- Databinding
+
