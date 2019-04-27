@@ -1,19 +1,24 @@
 package dk.martin.newsapp.viewmodel
 
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModel
 import android.util.Log
+import android.view.View
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import com.xwray.groupie.GroupAdapter
+import com.xwray.groupie.ViewHolder
 import dk.martin.newsapp.model.Article
 import dk.martin.newsapp.service.module.NetworkModule
-import dk.martin.newsapp.view.adapter.ArticleRecyclerAdapter
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 
 class NewsListViewModel : ViewModel() {
     private lateinit var subscription: Disposable
-    private var articles = MutableLiveData<List<Article>>()
-    private val articleRecyclerAdapter = ArticleRecyclerAdapter()
+    val loadingVisibility: MutableLiveData<Int> = MutableLiveData()
+    private val mutableArticles = MutableLiveData<List<Article>>()
+    private val groupAdapter = GroupAdapter<ViewHolder>()
+    var articles: LiveData<List<Article>> = mutableArticles
 
     init {
         initializeArticlesFromApi()
@@ -21,7 +26,7 @@ class NewsListViewModel : ViewModel() {
 
     fun getArticles() = articles.value
 
-    fun getAdapter() = articleRecyclerAdapter
+    fun getGroupAdapter() = groupAdapter
 
     private fun initializeArticlesFromApi() {
         Log.d("initializeArticlesFromApi", "Running initializeArticlesFromApi()")
@@ -32,13 +37,18 @@ class NewsListViewModel : ViewModel() {
 
         subscription = apiService.getArticles()
             .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread()).subscribe({ result ->
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnSubscribe { onRetrieveArticleListStart() }
+            .doOnTerminate { onRetrieveArticleListFinish() }
+            .subscribe({ result ->
                 Log.d("initializeArticlesFromApi", result.toString())
-                this.articles.value = result.articles as ArrayList<Article>
 
-                onSuccess(result.articles as ArrayList<Article>)
+                this.mutableArticles.value = result.articles as List<Article>
 
-                Log.d("initializeArticlesFromApi", "Articles size: ${(this.articles.value as ArrayList<Article>).size}")
+                Log.d(
+                    "initializeArticlesFromApi",
+                    "Articles size: ${(this.mutableArticles.value as List<Article>).size}"
+                )
             }, {
                 Log.d("initializeArticlesFromApi", it.message)
             })
@@ -49,7 +59,12 @@ class NewsListViewModel : ViewModel() {
         subscription.dispose()
     }
 
-    private fun onSuccess(articles: List<Article>) {
-        articles.let { articleRecyclerAdapter.updateArticleList(it) }
+    private fun onRetrieveArticleListStart() {
+        loadingVisibility.value = View.VISIBLE
+
+    }
+
+    private fun onRetrieveArticleListFinish() {
+        loadingVisibility.value = View.GONE
     }
 }
