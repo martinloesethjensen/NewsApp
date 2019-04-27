@@ -1,6 +1,7 @@
 package dk.martin.newsapp.viewmodel
 
 import android.util.Log
+import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -14,6 +15,7 @@ import io.reactivex.schedulers.Schedulers
 
 class NewsListViewModel : ViewModel() {
     private lateinit var subscription: Disposable
+    val loadingVisibility: MutableLiveData<Int> = MutableLiveData()
     private val mutableArticles = MutableLiveData<List<Article>>()
     private val groupAdapter = GroupAdapter<ViewHolder>()
     var articles: LiveData<List<Article>> = mutableArticles
@@ -36,6 +38,8 @@ class NewsListViewModel : ViewModel() {
         subscription = apiService.getArticles()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
+            .doOnSubscribe { onRetrieveArticleListStart() }
+            .doOnTerminate { onRetrieveArticleListFinish() }
             .subscribe({ result ->
                 Log.d("initializeArticlesFromApi", result.toString())
 
@@ -53,5 +57,14 @@ class NewsListViewModel : ViewModel() {
     override fun onCleared() {
         super.onCleared()
         subscription.dispose()
+    }
+
+    private fun onRetrieveArticleListStart() {
+        loadingVisibility.value = View.VISIBLE
+
+    }
+
+    private fun onRetrieveArticleListFinish() {
+        loadingVisibility.value = View.GONE
     }
 }
