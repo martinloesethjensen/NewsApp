@@ -11,18 +11,18 @@ Create a small news application that makes use of the https://newsapi.org/ API f
 Moreover, the project should make use of the following concepts / libraries:
 
 - The MVVM architecture
-- Retrofit for networking
+- [Retrofit](https://github.com/square/retrofit) for networking
 - RecyclerView for the list of news stories
-- Glide for image handling
+- [Glide](https://github.com/bumptech/glide) for image handling
 
 For bonus points, the project can make use of the following (this isn’t required, but it refers to technologies we use at Adapt):
 
 - Kotlin instead of Java
-- Conductor
-- RxJava
+- [Conductor](https://github.com/bluelinelabs/Conductor)
+- [RxJava](https://github.com/ReactiveX/RxJava)
 ___
 
 Extra things added: 
-- Groupie
+- [Groupie](https://github.com/lisawray/groupie)
 - Databinding
 
