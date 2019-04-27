@@ -4,16 +4,18 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import dk.martin.newsapp.R
+import dk.martin.newsapp.view.groupie.item.ArticleItem
 import dk.martin.newsapp.viewmodel.NewsListViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.article_list.*
 
 
 class NewsListActivity : AppCompatActivity() {
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,15 +27,20 @@ class NewsListActivity : AppCompatActivity() {
 
     private fun initializeUi() {
         val viewModel = ViewModelProviders.of(this).get(NewsListViewModel::class.java)
+        val groupAdapter = viewModel.getGroupAdapter()
+
         viewModel.getArticles()
 
-        listArticles.layoutManager = LinearLayoutManager(
-            this,
-            RecyclerView.VERTICAL,
-            false
-        )
 
-        listArticles.adapter = viewModel.getAdapter()
+        viewModel.articles.observe(this, Observer { articles ->
+            articles ?: return@Observer
+            groupAdapter.update(articles.map(::ArticleItem))
+        })
+
+        listArticles.apply {
+            layoutManager = LinearLayoutManager(this@NewsListActivity)
+            adapter = groupAdapter
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

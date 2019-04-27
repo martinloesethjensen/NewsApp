@@ -6,6 +6,16 @@ apply plugin: 'kotlin-kapt'
 
 apply plugin: 'kotlin-android-extensions'
 
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "org.jetbrains.kotlin:kotlin-android-extensions:$kotlin_version"
+    }
+}
+
 androidExtensions {
     experimental = true
 }
