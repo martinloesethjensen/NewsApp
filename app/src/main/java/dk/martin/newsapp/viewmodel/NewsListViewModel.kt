@@ -15,16 +15,21 @@ import io.reactivex.schedulers.Schedulers
 
 class NewsListViewModel : ViewModel() {
     private lateinit var subscription: Disposable
-    val loadingVisibility: MutableLiveData<Int> = MutableLiveData()
+    private val mutableLoadingVisibility: MutableLiveData<Int> = MutableLiveData()
+    private val loadingVisibility: LiveData<Int>
     private val mutableArticles = MutableLiveData<List<Article>>()
+    private val articles: LiveData<List<Article>>
     private val groupAdapter = GroupAdapter<ViewHolder>()
-    var articles: LiveData<List<Article>> = mutableArticles
 
     init {
+        loadingVisibility = mutableLoadingVisibility
+        articles = mutableArticles
         initializeArticlesFromApi()
     }
 
-    fun getArticles() = articles.value
+    fun getArticles() = articles
+
+    fun getLoadingVisibility() = loadingVisibility
 
     fun getGroupAdapter() = groupAdapter
 
@@ -41,13 +46,11 @@ class NewsListViewModel : ViewModel() {
             .doOnSubscribe { onRetrieveArticleListStart() }
             .doOnTerminate { onRetrieveArticleListFinish() }
             .subscribe({ result ->
-                Log.d("initializeArticlesFromApi", result.toString())
-
-                this.mutableArticles.value = result.articles as List<Article>
+                mutableArticles.value = result.articles as List<Article>
 
                 Log.d(
                     "initializeArticlesFromApi",
-                    "Articles size: ${(this.mutableArticles.value as List<Article>).size}"
+                    "Articles size: ${(mutableArticles.value as List<Article>).size}"
                 )
             }, {
                 Log.d("initializeArticlesFromApi", it.message)
@@ -60,11 +63,11 @@ class NewsListViewModel : ViewModel() {
     }
 
     private fun onRetrieveArticleListStart() {
-        loadingVisibility.value = View.VISIBLE
+        mutableLoadingVisibility.value = View.VISIBLE
 
     }
 
     private fun onRetrieveArticleListFinish() {
-        loadingVisibility.value = View.GONE
+        mutableLoadingVisibility.value = View.GONE
     }
 }

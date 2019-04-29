@@ -2,10 +2,6 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <data>
-        <variable name="viewModel" type="dk.martin.newsapp.viewmodel.NewsListViewModel"/>
-    </data>
-
     <androidx.constraintlayout.widget.ConstraintLayout
             xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
@@ -15,9 +11,9 @@
             tools:context=".view.ui.NewsListActivity">
 
         <ProgressBar
+                android:id="@+id/progress_circular_article_list"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:mutableVisibility="@{viewModel.getLoadingVisibility()}"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -33,4 +29,5 @@
                 tools:listitem="@layout/article_not_list"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </layout>

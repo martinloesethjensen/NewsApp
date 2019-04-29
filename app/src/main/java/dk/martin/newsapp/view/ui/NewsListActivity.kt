@@ -29,10 +29,11 @@ class NewsListActivity : AppCompatActivity() {
         val viewModel = ViewModelProviders.of(this).get(NewsListViewModel::class.java)
         val groupAdapter = viewModel.getGroupAdapter()
 
-        viewModel.getArticles()
+        viewModel.getLoadingVisibility().observe(this, Observer {
+            progress_circular_article_list.visibility = it
+        })
 
-
-        viewModel.articles.observe(this, Observer { articles ->
+        viewModel.getArticles().observe(this, Observer { articles ->
             articles ?: return@Observer
             groupAdapter.update(articles.map(::ArticleItem))
         })
