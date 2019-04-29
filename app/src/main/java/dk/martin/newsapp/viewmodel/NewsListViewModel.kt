@@ -40,7 +40,7 @@ class NewsListViewModel : ViewModel() {
 
         val apiService = NetworkModule.provideNewsApi(retrofit)
 
-        subscription = apiService.getArticles()
+        subscription = apiService.getArticles("Adapt agencies")
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { onRetrieveArticleListStart() }
