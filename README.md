@@ -1,4 +1,5 @@
 # NewsApp
+![Bitrise](https://app.bitrise.io/app/4983376f116f47b7/status.svg?token=pdRr29oaWA76P_xC5hG_rg)
 ## News application coding challenge
 The application is a very simple app made in Kotlin, that fetches news from a news api and puts the results in a list.
 Every article shown on the list is a cardview that also shows the article title and description. 
